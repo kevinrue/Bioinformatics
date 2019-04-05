@@ -5,6 +5,12 @@ The arguments telling Gviz to visually link exons into transcripts are documente
 
 # Visualize the exon structure of selected transcripts
 
+`Gviz::GeneRegionTrack` expects information in columns that may be named differently in the GTF file:
+
+- exon identifiers in `"exon"` (typically stored under `"exon_number"`)
+- transcript identifiers in `"transcript"` (typically stored under `"transcript_id"`)
+- gene identifiers in `"gene"` (typically stored under `"gene_id"`)
+
 ```{r}
 # gtf : a GTF file
 # which   : a `GRanges`
