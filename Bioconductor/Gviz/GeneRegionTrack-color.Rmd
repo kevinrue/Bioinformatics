@@ -8,16 +8,17 @@
 In the chunk below:
 
 - `feature` takes a vector of length matching the number of elements in `range`
-- `final` and `source` are values of `as.vector(example_combined_grange$source)`
+- `final` and `source` are values of `as.vector(example_grange$source)`
    which are mapped to the `"red"` and `"blue"` colors, respectively
 
-```
-gen <- as.character(unique(genome(example_combined_grange)))
-chr <- as.character(unique(seqnames(example_combined_grange)))
+```{r}
+gen <- as.character(unique(genome(example_grange)))
+chr <- as.character(unique(seqnames(example_grange)))
 grtrack_combined <- GeneRegionTrack(
-    range = example_combined_grange,
+    range = example_grange,
     genome=gen, chromosome=chr, name="Genes",
-    feature=as.vector(example_combined_grange$source), final="red", source="blue"
+    feature=as.vector(example_grange$source), final="red", source="blue"
 )
 plotTracks(trackList = list(gtrack, grtrack_combined))
 ```
+
