@@ -6,7 +6,7 @@ In the functions below, chromosome names must match between GTF files
 
 # Visualize a genomic region
 
-```
+```r
 # gtfList : a named list of GTF files
 # which   : a `GRanges`
 plotTranscriptModelsInRegion <- function(gtfList, which) {
