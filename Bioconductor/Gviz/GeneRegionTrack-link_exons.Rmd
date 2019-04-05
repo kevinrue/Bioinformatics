@@ -1,24 +1,31 @@
-# A single named file
-named_gtf_files <- list(trackname="path/to/file")
 
-for (for_name in names(named_gtf_files)) {
-    for_gtf <- named_gtf_files[[for_name]]
-    for_exons <- import.gff(for_gtf, feature.type = "exon")
+# Preliminary notes
+
+The arguments telling Gviz to visually link exons into transcripts are documented but not necessarily easy to find.
+
+# Visualize the exon structure of selected transcripts
+
+```{r}
+# gtf : a GTF file
+# which   : a `GRanges`
+function(gtf, i) {
+    gtf_exons <- import.gff(gtf_file, feature.type = "exon")
     # Prepare columns expected by Gviz
-    for_exons$exon <- for_exons$exon_number
-    for_exons$transcript <- for_exons$transcript_id
-    for_exons$gene <- for_exons$gene_id
+    gtf_exons$exon <- gtf_exons$exon_number
+    gtf_exons$transcript <- gtf_exons$transcript_id
+    gtf_exons$gene <- gtf_exons$gene_id
     # Split to visualize selected transcripts as examples
-    gr_data <- split(for_exons, for_exons$transcript_id)
-    gr_data <- gr_data[1:2]
+    gr_data <- split(gtf_exons, gtf_exons$transcript_id)
+    gr_data <- gr_data[i]
     # Unlist to avoid an issue with GRangesList
     gr_data <- unlist(gr_data)
     # Make the track
     gr_track <-  GeneRegionTrack(
         range = gr_data,
         genome=gen, chromosome=chr,
-        name=for_name
+        name="Track"
     )
     chr <- as.character(unique(seqnames(gr_track)))
     plotTracks(trackList = list(gr_track), chromosome = chr)
 }
+```
