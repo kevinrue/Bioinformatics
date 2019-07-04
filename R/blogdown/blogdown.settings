@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#USER=
+GITHUB_USERNAME=kevinrue
+
+# Path to the source code repository
+source_path="/Users/$USER/git/$GITHUB_USERNAME.github.io-academic/"
+
+# Path to the deployment repository
+site_path="/Users/$USER/git/$GITHUB_USERNAME.github.io"
