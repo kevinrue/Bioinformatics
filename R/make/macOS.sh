@@ -8,6 +8,7 @@ make check
 make pdf
 make info
 
-make install
-make install-info
-make install-pdf
+# the "install*" commands require "sudo" for a system-wide installation
+sudo make install
+sudo make install-info
+sudo make install-pdf
