@@ -5,7 +5,7 @@
 cd book-output
 git checkout gh-pages
 git pull
-rm -rf *
+git rm -rf *
 cp -r ../_book/* ./
 git add --all *
 git commit -m "Update the book"
