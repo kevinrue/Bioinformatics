@@ -25,7 +25,7 @@ docker build -t NAME:TAG PATH
 #  -p, --password string   Password
 #  -u, --username string   Username
 
-docker build -u USRENAME -p PASSWORD
+docker login -u USRENAME -p PASSWORD
 
 ############
 ####
