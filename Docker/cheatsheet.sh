@@ -44,5 +44,6 @@ docker images
 #  -p, --publish list                   Publish a container's port(s) to the host
 #      --rm                             Automatically remove the container when it exits
 
+docker run NAME:TAG
 docker run -p IMAGE_PORT:LOCAL_PORT NAME:TAG
 docker run -i --rm -p IMAGE_PORT:LOCAL_PORT NAME:TAG
