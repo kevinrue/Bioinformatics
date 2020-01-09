@@ -18,6 +18,17 @@ docker build -t NAME:TAG PATH
 
 
 ################
+# docker login #
+################
+# Log in to a Docker registry.
+# Usage:	docker login [OPTIONS] [SERVER]
+#  -p, --password string   Password
+#  -u, --username string   Username
+
+docker build -u USRENAME -p PASSWORD
+
+############
+####
 # docker push #
 ################
 # Push an image or a repository to a registry
