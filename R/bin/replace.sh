@@ -55,7 +55,7 @@ fi
 replace_from=$1
 replace_to=$2
 
-if [ ${verbose} == 0 ]
+if [ ${verbose} == 1 ]
 then
     echo "[DEBUG]"
     echo "- pkg_path: $pkg_path"
