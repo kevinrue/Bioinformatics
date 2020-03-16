@@ -7,23 +7,27 @@ In the functions below, chromosome names must match between GTF files
 # Visualize a genomic region
 
 ```{r}
-# gtfList : a named list of GTF files
-# which   : a `GRanges`
+# gtfList      : a named list of GTF files [character]
+# which        : region to visualise [GRanges`]
 plotTranscriptModelsInRegion <- function(gtfList, which) {
     # Prepare genome axis
     gtrack <- GenomeAxisTrack()
     trackList <- list(gtrack)
-
+    # Make sure strand is not considered to query the GTF file
+    which_gtf <- which; strand(which_gtf) <- "*"
     # Import relevant features from each GTF file
     for (for_name in names(gtfList)) {
         message("Processing ", for_name, " ...")
         for_gtf <- gtfList[[for_name]]
-        for_exons <- import.gff(for_gtf, feature.type = "exon", which=which)
+        for_exons <- import.gff(for_gtf, feature.type = "exon", which=which_gtf)
+        print(for_exons)
         # Prepare columns expected by Gviz for visually grouping exons by transcript
         for_exons$exon <- for_exons$exon_number
         for_exons$transcript <- for_exons$transcript_id
         for_exons$gene <- for_exons$gene_id
         # Make the track
+        gen <- as.character(unique(genome(which)))
+        chr <- as.character(unique(seqnames(which)))
         gr_track <- GeneRegionTrack(
             range = for_exons,
             genome=gen, chromosome=chr, name=for_name
@@ -31,7 +35,9 @@ plotTranscriptModelsInRegion <- function(gtfList, which) {
         trackList <- append(trackList, gr_track)
         chr <- as.character(unique(seqnames(gr_track)))
     }
-    plotTracks(trackList = trackList, chromosome = chr)
+    plotTracks(
+        trackList = trackList,
+        chromosome = chr, from = start(which), to = end(which))
 }
 ```
 
