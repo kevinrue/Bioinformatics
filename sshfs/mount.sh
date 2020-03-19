@@ -5,7 +5,7 @@ sshfs USERNAME@SERVER:ABSOLUTE_SERVER_PATH ABSOLUTE_LOCAL_PATH \
       -onegative_vncache \
       -ofollow_symlinks \
       -odefer_permissions \
-      -ovolname="KGen"
+      -ovolname="VOLUME NAME"
 
 # see: https://github.com/osxfuse/osxfuse/wiki/Mount-options
 # -o auto_cache:        enable caching based on modification times
