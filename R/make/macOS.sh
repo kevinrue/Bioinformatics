@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./configure --enable-R-framework
+./configure --enable-R-framework --enable-memory-profiling
 make
 
 make check
