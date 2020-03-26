@@ -1,0 +1,75 @@
+#!/bin/bash
+set -e
+
+# switch between various actions
+action=$1
+
+echo $action
+
+if [ "$action" != 'build' ] && [ "$action" != 'deploy' ] && [ "$action" != 'all' ]
+then
+	echo "Invalid action: $action"
+	exit 1
+fi
+
+original_path=$(pwd)
+
+source_path="/Users/kevin/git/kevinrue.github.io-academic"
+site_path="/Users/kevin/git/kevinrue.github.io"
+
+echo_eval () {
+  echo "> $1"
+  eval "$1"
+}
+
+echo "Building $source_path"
+
+if [ "$action" == 'build' ] || [ "$action" == 'all' ]
+then
+	# Compile blogdown from the source folder
+	cmd="cd $source_path"
+	echo_eval "$cmd"
+
+	# But first, clean the public/ folder
+	cmd='rm -rf ./public/*'
+	echo_eval "$cmd"
+
+	cmd='Rscript -e "blogdown::build_site()"'
+	echo_eval "$cmd"
+fi
+
+if [ "$action" == 'deploy' ] || [ "$action" == 'all' ]
+then
+	cmd="cd $site_path"
+	echo_eval "$cmd"
+
+	# Make sure the repo is up to date before 'editing' files
+	cmd="git pull"
+	echo_eval "$cmd"
+
+	# Remove previous files (excepted '.*' like '.git')
+	cmd="git rm -rf ./*"
+	echo_eval "$cmd"
+
+	# Place the new website files
+	cmd="cp -r $source_path/public/* $site_path/"
+	echo_eval "$cmd"
+
+	# Add a .nojekyll file
+	cmd="touch $site_path/.nojekyll"
+	echo_eval "$cmd"	
+
+	# Stage new files
+	cmd="git add ."
+	echo_eval "$cmd"
+
+	# Commit with message
+	cmd="git commit -m 'Update'"
+	echo_eval "$cmd"
+
+	# Push commit
+	cmd="git push origin master"
+	echo_eval "$cmd"
+fi
+
+cd "$original_path"
