@@ -17,7 +17,7 @@
 
 Host *
     Protocol 2
-     ~/.ssh/id_rsa
+    IdentityFile ~/.ssh/id_rsa
     TCPKeepAlive yes
     ServerAliveInterval 3600
     ServerAliveCountMax 2
@@ -26,9 +26,21 @@ Host *
     ForwardAgent yes
     Compression yes
 
-
-Host NICKNAME
+Host HOST_NICKNAME
     User USERNAME
-    Hostname SERVER
+    Hostname HOSTNAME
     Port 22
-    LocalForward PORT localhost:PORT
+    LocalForward PORT localhost:PORT # optionally forward a port
+
+Host GATEWAY
+     User USERNAME
+     Hostname GATEWAY_HOSTNAME
+     Port PORT
+     LocalForward 8022 SECURE_HOSTNAME:22 # e.g., forward SSH
+     LocalForward 8787 SECURE_HOSTNAME:8787 # e.g., forward RStudio Server
+
+# Requires an active connection to GATEWAY
+Host SECURE_HOST_NICKNAME
+    User USERNAME
+    Hostname localhost
+    Port 8022
